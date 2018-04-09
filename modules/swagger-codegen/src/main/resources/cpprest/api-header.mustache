@@ -25,7 +25,7 @@ using namespace {{modelNamespace}};
 class {{declspec}} I{{classname}}
 {
 public:
-    virtual ~{{classname}}() = default;
+    virtual ~I{{classname}}() = default;
     {{#operation}}
     virtual pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> {{operationId}}(
         {{#allParams}}
