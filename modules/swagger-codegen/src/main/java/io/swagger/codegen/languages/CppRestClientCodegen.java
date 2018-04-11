@@ -94,6 +94,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         apiTemplateFiles.put("api-header.mustache", ".h");
         apiTemplateFiles.put("api-source.mustache", ".cpp");
+        apiTemplateFiles.put("api-gmock.mustache", "GMock.h");
 
         embeddedTemplateDir = templateDir = "cpprest";
 

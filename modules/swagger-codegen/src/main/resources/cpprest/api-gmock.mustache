@@ -1,0 +1,21 @@
+{{#operations}}
+#pragma once
+
+#include <gmock/gmock.h>
+
+#include "{{classname}}.h"
+
+class {{declspec}} {{classname}}Mock : public I{{classname}}
+{
+public:
+    {{#operation}}
+    MOCK_METHOD0( {{operationId}}, pplx::task<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> (
+        {{#allParams}}
+        {{^required}}boost::optional<{{/required}}{{{dataType}}}{{^required}}>{{/required}}{{#hasMore}},{{/hasMore}}
+        {{/allParams}}
+    ) );
+    {{/operation}}
+};
+
+
+{{/operations}}
