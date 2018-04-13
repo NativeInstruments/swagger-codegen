@@ -22,6 +22,7 @@ namespace {{this}} {
 
 using namespace {{modelNamespace}};
 
+{{#generateInterfacesForApis}}
 class {{declspec}} I{{classname}}
 {
 public:
@@ -35,7 +36,9 @@ public:
     {{/operation}}
 };
 
-class {{declspec}} {{classname}} : public I{{classname}}
+{{/generateInterfacesForApis}}
+
+class {{declspec}} {{classname}} {{#generateInterfacesForApis}}: public I{{classname}}{{/generateInterfacesForApis}}
 {
 public:
     {{classname}}( std::shared_ptr<ApiClient> apiClient );
@@ -54,7 +57,7 @@ public:
         {{#allParams}}
         {{^required}}boost::optional<{{/required}}{{{dataType}}}{{^required}}>{{/required}} {{paramName}}{{#hasMore}},{{/hasMore}}
         {{/allParams}}
-    ) override;
+    ){{#generateInterfacesForApis}} override{{/generateInterfacesForApis}};
     {{/operation}}
 
 protected:
