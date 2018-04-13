@@ -46,6 +46,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
     public static final String DECLSPEC = "declspec";
     public static final String DEFAULT_INCLUDE = "defaultInclude";
     public static final String GENERATE_INTERFACES_FOR_APIS = "generateInterfacesForApis";
+    public static final String GENERATE_GMOCKS_FOR_APIS = "generateGMocksForApis";
 
     protected String packageVersion = "1.0.0";
     protected String declspec = "";
@@ -95,7 +96,6 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         apiTemplateFiles.put("api-header.mustache", ".h");
         apiTemplateFiles.put("api-source.mustache", ".cpp");
-        apiTemplateFiles.put("api-gmock.mustache", "GMock.h");
 
         embeddedTemplateDir = templateDir = "cpprest";
 
@@ -113,7 +113,9 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
                 "The default include statement that should be placed in all headers for including things like the declspec (convention: #include \"Commons.h\" ",
                 this.defaultInclude);
         addOption(GENERATE_INTERFACES_FOR_APIS,
-                "Generate abstract base classes (interfaces) for APIS. This allows to write mocks for APIS.");
+                "Generate abstract base classes (interfaces) for APIs. This allows to mocks APIs (e.g. for unit testing).");
+        addOption(GENERATE_GMOCKS_FOR_APIS,
+                "Generate Google Mock classes for APIs. Implies generating abstract base classes (interfaces) for APIs.");
 
         supportingFiles.add(new SupportingFile("modelbase-header.mustache", "", "ModelBase.h"));
         supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
@@ -174,6 +176,12 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
         if (additionalProperties.containsKey(DEFAULT_INCLUDE)) {
             defaultInclude = additionalProperties.get(DEFAULT_INCLUDE).toString();
+        }
+
+        if (convertPropertyToBoolean(GENERATE_GMOCKS_FOR_APIS))
+        {
+            additionalProperties.put(GENERATE_INTERFACES_FOR_APIS, "true");
+            apiTemplateFiles.put("api-gmock.mustache", "GMock.h");
         }
 
         additionalProperties.put("modelNamespaceDeclarations", modelPackage.split("\\."));
