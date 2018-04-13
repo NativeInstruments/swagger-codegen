@@ -35,8 +35,8 @@ public:
     ) = 0;
     {{/operation}}
 };
-{{/generateInterfacesForApis}}
 
+{{/generateInterfacesForApis}}
 
 class {{declspec}} {{classname}} {{#generateInterfacesForApis}}: public I{{classname}}{{/generateInterfacesForApis}}
 {
@@ -57,7 +57,7 @@ public:
         {{#allParams}}
         {{^required}}boost::optional<{{/required}}{{{dataType}}}{{^required}}>{{/required}} {{paramName}}{{#hasMore}},{{/hasMore}}
         {{/allParams}}
-    ) {{#generateInterfacesForApis}}override{{/generateInterfacesForApis}};
+    ){{#generateInterfacesForApis}} override{{/generateInterfacesForApis}};
     {{/operation}}
 
 protected:
