@@ -45,6 +45,7 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
 
     public static final String DECLSPEC = "declspec";
     public static final String DEFAULT_INCLUDE = "defaultInclude";
+    public static final String GENERATE_INTERFACES_FOR_APIS = "generateInterfacesForApis";
 
     protected String packageVersion = "1.0.0";
     protected String declspec = "";
@@ -110,6 +111,8 @@ public class CppRestClientCodegen extends AbstractCppCodegen {
         addOption(DEFAULT_INCLUDE,
                 "The default include statement that should be placed in all headers for including things like the declspec (convention: #include \"Commons.h\" ",
                 this.defaultInclude);
+        addOption(GENERATE_INTERFACES_FOR_APIS,
+                "Generate abstract base classes (interfaces) for APIS. This allows to write mocks for APIS.");
 
         supportingFiles.add(new SupportingFile("modelbase-header.mustache", "", "ModelBase.h"));
         supportingFiles.add(new SupportingFile("modelbase-source.mustache", "", "ModelBase.cpp"));
